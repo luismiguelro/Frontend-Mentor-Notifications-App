@@ -11,6 +11,7 @@
       sizes="32x32"
       href="./assets/images/favicon-32x32.png"
     />
+    <link rel="stylesheet" href="/css/main.css">
 
     <title>Frontend Mentor | Notifications page</title>
 
@@ -26,41 +27,40 @@
     </style>
   </head>
   <body>
-
     <!--Notifications-->
     <main class="notifications">
-
       <!--Header-->
       <header class="header">
-        <h1 class="header__title">Notifications 3</h1>
+        <h1 class="header__title">Notifications <span class="unread-count">3</span></h1>
         <a href="#" class="header__link">Mark all as read</a>
       </header>
 
-      <!--Notification-->
+      <!--Notification
+      <article class="notification notification--unread">
+        <h2 class="notification__title"> <strong>Mark Webber</strong> reacted to your recent post <a href="" class="link link--post">My first tournament today!</a> <span class="unread-bubble"></span></h2> 
+        <p class="date">1m ago </p>
+      </article>-->
+
       <article class="notification">
-        <img src="assets/images/avatar-rizky-hasanuddin.webp" alt="" class="avatar">
-        <h2 class="notification__title">  <strong>Rizky Hasanuddin </strong> sent you a private message</h2>
-        <p class="date"> 5 days ago</p>
+        <img
+          src="assets/images/avatar-rizky-hasanuddin.webp"
+          alt=""
+          class="avatar"
+        />
+        <h2 class="notification__title">
+          <strong>Rizky Hasanuddin </strong> sent you a private message
+        </h2>
+        <p class="date">5 days ago</p>
         <p class="notification__message">
-          Hello,
-          thanks for setting up the Chess Club. I've been a member for a few weeks now
-          and I'm already having lots of fun and improving my game.
+          Hello, thanks for setting up the Chess Club. I've been a member for a
+          few weeks now and I'm already having lots of fun and improving my
+          game.
         </p>
       </article>
     </main>
 
-    Mark Webber reacted to your recent post My first tournament today! 1m ago
-    Angela Gray followed you 5m ago Jacob Thompson has joined your group Chess
-    Club 1 day ago   Kimberly Smith
-    commented on your picture 1 week ago Nathan Peterson reacted to your recent
-    post 5 end-game strategies to increase your win rate 2 weeks ago Anna Kim
-    left the group Chess Club 2 weeks ago
+    
 
-    <div class="attribution">
-      Challenge by
-      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
-        >Frontend Mentor</a
-      >. Coded by <a href="#">Your Name Here</a>.
-    </div>
+    
   </body>
 </html>

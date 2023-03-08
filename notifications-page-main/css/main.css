@@ -1,0 +1,98 @@
+/*General*/
+:root{
+    --very-light-blue: #DDE7EE;
+    --dark-grey-blue: #5E6778; 
+    --grey-blue:#939CAD;
+    --blue: #0A327B;
+}
+*{
+    box-sizing: border-box;
+}
+
+html,body{
+    height: 100%;
+}
+body{
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--very-light-blue);
+}
+a{
+    text-decoration: none;
+    color: var(--dark-grey-blue);
+}
+
+/* Notifications */
+.notifications{
+    max-width: 730px;
+    background-color: white;
+    border-radius: 15px;
+    padding: 2.5rem;
+}
+
+/* Header */
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+.header__title{
+    margin: 0;
+    font-size: 1.8rem;
+}
+.unread-count{
+    background-color: var(--blue);
+    color: white;
+    font-size: 1.5rem;
+    padding: .2rem .7rem;
+    border-radius: 6px;
+    margin-left: .2rem;
+}
+
+/* Notification */
+
+.notification{
+    display: grid;
+    column-gap: 1rem;
+    row-gap: .6rem;
+    /*Definir areas segun el preview, para indicar que no hay nada(.)*/
+    grid-template-areas: 
+    "avatar title"
+    "avatar date"
+    ". message";
+}
+
+/*Cualquier elemento descendente*/
+.notification > *{
+    margin: 0;
+}
+.avatar{
+    width: 45px;
+    height: auto;
+    grid-area: avatar;
+}
+.notification__title{
+    font-weight: normal;
+    grid-area: title;
+    font-size: 1.3rem;
+    color: var(--dark-grey-blue);
+}
+.notification__title strong{
+    color: black;
+}
+.date{
+    grid-area: date;
+    font-size: 1.1rem;
+    color: var(--grey-blue);
+}
+.notification__message{
+    grid-area: message;
+    border: 1px solid var(--very-light-blue);
+    border-radius: 5px;
+    padding: 1.2rem;
+    color: var(--dark-grey-blue);
+    
+}
