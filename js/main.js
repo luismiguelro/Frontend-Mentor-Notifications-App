@@ -84,6 +84,9 @@ function composeNotification(notification){
     // notification wrapper 
     const notificationElement = document.createElement('article');
     notificationElement.classList.add('notification');
+    if(notification.unread){
+        notificationElement.classList.add('notification--unread');
+    }
 
     // avatar
     const avatarElement = document.createElement('img');
@@ -93,12 +96,32 @@ function composeNotification(notification){
 
     // title
     const titleElement=document.createElement('h2');
-    h2.classList.add('notification__title');
+    titleElement.classList.add('notification__title');
     let titleContent = `<strong>${notification.name}</strong> ${notification.content}`;
 
+    if(notification.type==='link'){
+        titleContent+=`<a href="#" class="link link--${notification.meta.linkType}">${notification.meta.linkText}</a>`
+    }
 
     // Control notification states
     if(notification.unread){
-        notificationElement.classList.add('notification--unread');
+        titleContent+=`<span class="unread-bubble"></span>`;  
     }
+    titleElement.innerHTML = titleContent;
+
+    // date
+    const dateElement = document.createElement('p');
+    dateElement.classList.add('date');
+    dateElement.textContent = notification.date;
+
+    // compose DOM element
+    notificationElement.appendChild(avatarElement);
+    notificationElement.appendChild(titleElement);
+    notificationElement.appendChild(dateElement);
+
+    // return it
+    return notificationElement;
 }
+
+//const element = composeNotification(notificationCollection[0]);
+//console.log(element);
