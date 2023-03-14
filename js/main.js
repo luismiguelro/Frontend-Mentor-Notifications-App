@@ -27,12 +27,80 @@ const notificationCollection =[
         meta:{
             linkType: 'post',
             linkText: 'My first tournament today!'
-        }
-    }
+        },
+    },
+    {
+        avatar: 'assets/images/avatar-angela-gray.webp',
+        date: '5m ago',
+        name: 'Angela Gray',
+        content: 'followed you',
+        unread: true,
+        type: 'standard',
+      },
+      {
+        avatar: 'assets/images/avatar-jacob-thompson.webp',
+        date: '1 day ago',
+        name: 'Jacob Thompson',
+        content: 'has joined your group',
+        unread: true,
+        type: 'link',
+        meta: {
+          linkType: 'group',
+          linkText: 'Chess Club',
+        },
+      },
+      {
+        avatar: 'assets/images/avatar-rizky-hasanuddin.webp',
+        date: '5 days ago',
+        name: 'Rizky Hasanuddin',
+        content: 'sent you a private message',
+        unread: false,
+        type: 'message',
+        meta: {
+          message:
+            "Hello, thanks for setting up the Chess Club. I've been a member for a few weeks now and I'm already having lots of fun and improving my game.",
+        },
+      },
+      {
+        avatar: 'assets/images/avatar-kimberly-smith.webp',
+        date: '1 week ago',
+        name: 'Kimberly Smith',
+        content: 'commented on your picture',
+        unread: false,
+        type: 'picture',
+        meta: {
+          picture: 'assets/images/image-chess.webp',
+        },
+      },
+      {
+        avatar: 'assets/images/avatar-nathan-peterson.webp',
+        date: '2 weeks ago',
+        name: 'Nathan Peterson',
+        content: 'reacted to your recent post',
+        unread: false,
+        type: 'link',
+        meta: {
+          linkType: 'post',
+          linkText: '5 end-game strategies to increase your win rate',
+        },
+      },
+      {
+        avatar: 'assets/images/avatar-anna-kim.webp',
+        date: '2 weeks ago',
+        name: 'Anna Kim',
+        content: 'has left the group',
+        unread: false,
+        type: 'link',
+        meta: {
+          linkType: 'group',
+          linkText: 'Chess Club',
+        },
+      },
 ]
 
 
 // Get DOM elements
+const mainElement = document.querySelector('.notifications');
 const markAllasReadElement = document.querySelector('.header__link');
 const unreadCountElement = document.querySelector('.unread-count');
 
@@ -51,7 +119,7 @@ function markAllasRead(){
     //get all unread notifications
     const unreadNotifications = document.querySelectorAll('.notification--unread');
     unreadNotifications.forEach(notification=>{
-       
+        notification.classList.remove('notification--unread');
        
     });
    
@@ -79,6 +147,14 @@ function resetUnreadCount(countNotification){
     
 }
 
+// show all notifications
+function showAllNotifications(notifications){
+    notifications.forEach(notification => {
+        const notificationElement = composeNotification(notification);
+        mainElement.appendChild(notificationElement);
+    })
+}
+
 // Compose notification DOM element
 function composeNotification(notification){
     // notification wrapper 
@@ -100,7 +176,7 @@ function composeNotification(notification){
     let titleContent = `<strong>${notification.name}</strong> ${notification.content}`;
 
     if(notification.type==='link'){
-        titleContent+=`<a href="#" class="link link--${notification.meta.linkType}">${notification.meta.linkText}</a>`
+        titleContent+=` <a href="#" class="link link--${notification.meta.linkType}">${notification.meta.linkText}</a>`
     }
 
     // Control notification states
@@ -125,3 +201,6 @@ function composeNotification(notification){
 
 //const element = composeNotification(notificationCollection[0]);
 //console.log(element);
+
+// Go
+showAllNotifications(notificationCollection);
