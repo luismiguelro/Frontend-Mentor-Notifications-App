@@ -101,106 +101,104 @@ const notificationCollection =[
 
 // Get DOM elements
 const mainElement = document.querySelector('.notifications');
-const markAllasReadElement = document.querySelector('.header__link');
+const markAllAsReadElement = document.querySelector('.header__link');
 const unreadCountElement = document.querySelector('.unread-count');
 
-//count notifications
-let countNotification =0;
-
-// listen for click events
-markAllasReadElement.addEventListener('click',()=>{
-    markAllasRead();
-    resetUnreadCount(countNotification)
+// Mark all notifications as read
+markAllAsReadElement.addEventListener('click', () => {
+  markAllAsRead();
+  resetUnreadCount();
+  removeAllNotifications()
+  showAllNotifications(notificationCollection);
 });
 
-//mark all notification as read
-function markAllasRead(){
+function markAllAsRead() {
+  //   const unreadNotifications = document.querySelectorAll(
+  //     '.notification--unread'
+  //   );
+  //   unreadNotifications.forEach((notification) =>
+  //     notification.classList.remove('notification--unread')
+  //   );
 
-    //get all unread notifications
-    const unreadNotifications = document.querySelectorAll('.notification--unread');
-    unreadNotifications.forEach(notification=>{
-        notification.classList.remove('notification--unread');
-       
-    });
-   
-    countNotification = unreadNotifications.length
-
-    //get all unread bubble
-    const unreadBubble = document.querySelectorAll('.unread-bubble');
-    unreadBubble.forEach(notification=>{
-        notification.classList.remove('unread-bubble');
-    });
-    markAllasReadElement.textContent ="Mark all as unread"; 
+  notificationCollection.forEach(
+    (notification) => (notification.unread = false)
+  );
 }
 
-
-
-// reset unread count
-function resetUnreadCount(countNotification){
-    if (countNotification>0){
-        unreadCountElement.textContent = "0";
-        
-    } else{
-        unreadCountElement.textContent = countNotification;
-
-    }
-    
+function resetUnreadCount() {
+  unreadCountElement.textContent = '0';
 }
 
-// show all notifications
-function showAllNotifications(notifications){
-    notifications.forEach(notification => {
-        const notificationElement = composeNotification(notification);
-        mainElement.appendChild(notificationElement);
-    })
+// Show all notifications
+function showAllNotifications(notifications) {
+  notifications.forEach((notification) => {
+    const notificationElement = composeNotification(notification);
+    mainElement.appendChild(notificationElement);
+  });
+}
+
+// Remove all notifications
+function removeAllNotifications() {
+  const allNotificationElements = document.querySelectorAll('.notification');
+  allNotificationElements.forEach((notification) => notification.remove());
 }
 
 // Compose notification DOM element
-function composeNotification(notification){
-    // notification wrapper 
-    const notificationElement = document.createElement('article');
-    notificationElement.classList.add('notification');
-    if(notification.unread){
-        notificationElement.classList.add('notification--unread');
-    }
+function composeNotification(notification) {
+  // Notification wrapper
+  const notificationElement = document.createElement('article');
+  notificationElement.classList.add('notification');
+  if (notification.unread) {
+    notificationElement.classList.add('notification--unread');
+  }
 
-    // avatar
-    const avatarElement = document.createElement('img');
-    avatarElement.classList.add('avatar');
-    avatarElement.alt = notification.name;
-    avatarElement.src = notification.avatar;
+  // Avatar
+  const avatarElement = document.createElement('img');
+  avatarElement.classList.add('avatar');
+  avatarElement.alt = notification.name;
+  avatarElement.src = notification.avatar;
 
-    // title
-    const titleElement=document.createElement('h2');
-    titleElement.classList.add('notification__title');
-    let titleContent = `<strong>${notification.name}</strong> ${notification.content}`;
+  // Title
+  const titleElement = document.createElement('h2');
+  titleElement.classList.add('notification__title');
+  let titleContent = `<strong>${notification.name}</strong> ${notification.content}`;
+  if (notification.type === 'link') {
+    titleContent += ` <a href="#" class="link link--${notification.meta.linkType}">${notification.meta.linkText}</a>`;
+  }
+  if (notification.unread) {
+    titleContent += `<span class="unread-bubble"></span>`;
+  }
+  titleElement.innerHTML = titleContent;
 
-    if(notification.type==='link'){
-        titleContent+=` <a href="#" class="link link--${notification.meta.linkType}">${notification.meta.linkText}</a>`
-    }
+  // Date
+  const dateElement = document.createElement('p');
+  dateElement.classList.add('date');
+  dateElement.textContent = notification.date;
 
-    // Control notification states
-    if(notification.unread){
-        titleContent+=`<span class="unread-bubble"></span>`;  
-    }
-    titleElement.innerHTML = titleContent;
+  // Compose DOM element
+  notificationElement.appendChild(avatarElement);
+  notificationElement.appendChild(titleElement);
+  notificationElement.appendChild(dateElement);
 
-    // date
-    const dateElement = document.createElement('p');
-    dateElement.classList.add('date');
-    dateElement.textContent = notification.date;
+  if (notification.type === 'message') {
+    notificationElement.classList.add('notification--message');
+    const messageElement = document.createElement('p');
+    messageElement.classList.add('notification__message');
+    messageElement.textContent = notification.meta.message;
+    notificationElement.appendChild(messageElement);
+  }
 
-    // compose DOM element
-    notificationElement.appendChild(avatarElement);
-    notificationElement.appendChild(titleElement);
-    notificationElement.appendChild(dateElement);
+  if (notification.type === 'picture') {
+    notificationElement.classList.add('notification--picture');
+    const pictureElement = document.createElement('img');
+    pictureElement.classList.add('notification__picture');
+    pictureElement.src = notification.meta.picture;
+    notificationElement.appendChild(pictureElement);
+  }
 
-    // return it
-    return notificationElement;
+  // Return it
+  return notificationElement;
 }
 
-//const element = composeNotification(notificationCollection[0]);
-//console.log(element);
-
-// Go
+// GO
 showAllNotifications(notificationCollection);
